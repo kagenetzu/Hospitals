@@ -1,0 +1,106 @@
+﻿@model IEnumerable<KURSLAB3.Models.Pharmacy_has_Medicament>
+@using KURSLAB3.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+    <h2>Лекарства в аптеках</h2>
+
+    <p>
+        @Html.ActionLink("Новая запись", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.priceMedicamentPerPackeges)*@
+                Цена за упаковку лекарства
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.countPackegesMedicament)*@
+                Количество упаковок
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Medicament.nameMedicament)*@
+                Название лекарства
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Pharmacy.pharmacyAddress)*@
+                Адреса аптек
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.priceMedicamentPerPackeges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.countPackegesMedicament)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medicament.nameMedicament)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pharmacy.pharmacyAddress)
+                </td>
+                <td>
+                    @Html.ActionLink("Изменить", "Edit", new { id1 = item.Pharmacy_pharmacyNumber, id2 = item.Medicament_idMedicament }) |
+                    @*@Html.ActionLink("Подробнее", "Details", new { id1 = item.Pharmacy_pharmacyNumber, id2 = item.Medicament_idMedicament }) |*@
+                    @Html.ActionLink("Удалить", "Delete", new { id1 = item.Pharmacy_pharmacyNumber, id2 = item.Medicament_idMedicament })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <div class="container">
+        @if (pager.TotalPages > 0)
+        {
+
+
+
+            <ul class="pagination justify-content-end">
+
+                @if (pager.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pg=1">Первая</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?pg=@(pager.CurrentPage - 1)">Предыдущая</a>
+                    </li>
+                }
+
+                @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                {
+                    <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="?pg=@pge">@pge</a>
+                    </li>
+
+                }
+
+                @if (pager.CurrentPage < pager.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pg=@(pager.CurrentPage + 1)">Следующая</a>
+                    </li>
+                    <li>
+                        <a class="page-link" href="?pg=@(pager.TotalPages)">Последняя</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>

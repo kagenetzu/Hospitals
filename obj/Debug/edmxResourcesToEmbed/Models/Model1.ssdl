@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище MedicineModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Hospital">
+    <Key>
+      <PropertyRef Name="hospitalNumber" />
+    </Key>
+    <Property Name="hospitalNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="hospitalAddress" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Hospital_has_Medicament">
+    <Key>
+      <PropertyRef Name="Hospital_hospitalNumber" />
+      <PropertyRef Name="Medicament_idMedicament" />
+    </Key>
+    <Property Name="Hospital_hospitalNumber" Type="int" Nullable="false" />
+    <Property Name="Medicament_idMedicament" Type="int" Nullable="false" />
+    <Property Name="countPackagesMedicament" Type="int" />
+  </EntityType>
+  <EntityType Name="Medicament">
+    <Key>
+      <PropertyRef Name="idMedicament" />
+    </Key>
+    <Property Name="idMedicament" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nameMedicament" Type="varchar" MaxLength="15" />
+    <Property Name="firmManufacturer" Type="varchar" MaxLength="9" />
+  </EntityType>
+  <EntityType Name="Pharmacy">
+    <Key>
+      <PropertyRef Name="pharmacyNumber" />
+    </Key>
+    <Property Name="pharmacyNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pharmacyAddress" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Pharmacy_has_Medicament">
+    <Key>
+      <PropertyRef Name="Pharmacy_pharmacyNumber" />
+      <PropertyRef Name="Medicament_idMedicament" />
+    </Key>
+    <Property Name="Pharmacy_pharmacyNumber" Type="int" Nullable="false" />
+    <Property Name="Medicament_idMedicament" Type="int" Nullable="false" />
+    <Property Name="priceMedicamentPerPackeges" Type="int" />
+    <Property Name="countPackegesMedicament" Type="int" />
+  </EntityType>
+  <Association Name="FK__Hospital___Hospi__2D27B809">
+    <End Role="Hospital" Type="Self.Hospital" Multiplicity="1" />
+    <End Role="Hospital_has_Medicament" Type="Self.Hospital_has_Medicament" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hospital">
+        <PropertyRef Name="hospitalNumber" />
+      </Principal>
+      <Dependent Role="Hospital_has_Medicament">
+        <PropertyRef Name="Hospital_hospitalNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Hospital___Medic__2E1BDC42">
+    <End Role="Medicament" Type="Self.Medicament" Multiplicity="1" />
+    <End Role="Hospital_has_Medicament" Type="Self.Hospital_has_Medicament" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicament">
+        <PropertyRef Name="idMedicament" />
+      </Principal>
+      <Dependent Role="Hospital_has_Medicament">
+        <PropertyRef Name="Medicament_idMedicament" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Pharmacy___Medic__2A4B4B5E">
+    <End Role="Medicament" Type="Self.Medicament" Multiplicity="1" />
+    <End Role="Pharmacy_has_Medicament" Type="Self.Pharmacy_has_Medicament" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicament">
+        <PropertyRef Name="idMedicament" />
+      </Principal>
+      <Dependent Role="Pharmacy_has_Medicament">
+        <PropertyRef Name="Medicament_idMedicament" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Pharmacy___Pharm__29572725">
+    <End Role="Pharmacy" Type="Self.Pharmacy" Multiplicity="1" />
+    <End Role="Pharmacy_has_Medicament" Type="Self.Pharmacy_has_Medicament" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacy">
+        <PropertyRef Name="pharmacyNumber" />
+      </Principal>
+      <Dependent Role="Pharmacy_has_Medicament">
+        <PropertyRef Name="Pharmacy_pharmacyNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="addHospital" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="hospitalAdress" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="addHospitalHasMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="hospitalNumber" Type="int" Mode="In" />
+    <Parameter Name="idMedicament" Type="int" Mode="In" />
+    <Parameter Name="countPackagesMedicament" Type="int" Mode="In" />
+  </Function>
+  <Function Name="addMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="nameMedicament" Type="varchar" Mode="In" />
+    <Parameter Name="firmManucacturer" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="addPharmacy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pharmacylAdress" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="addPharmacyHasMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pharmacyNumber" Type="int" Mode="In" />
+    <Parameter Name="idMedicament" Type="int" Mode="In" />
+    <Parameter Name="priceMedicamentPerPackages" Type="int" Mode="In" />
+    <Parameter Name="countPackagesMedicament" Type="int" Mode="In" />
+  </Function>
+  <Function Name="deleteHospital" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="hospitalNumber" Type="int" Mode="In" />
+  </Function>
+  <Function Name="deleteHospitalHasMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="hospitalNumber" Type="int" Mode="In" />
+    <Parameter Name="idMedicament" Type="int" Mode="In" />
+  </Function>
+  <Function Name="deleteMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="deletePharmacy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pharmacyNumber" Type="int" Mode="In" />
+  </Function>
+  <Function Name="deletePharmacyHasMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pharmacylNumber" Type="int" Mode="In" />
+    <Parameter Name="idMedicament" Type="int" Mode="In" />
+  </Function>
+  <Function Name="firstTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPharmacy" Type="int" Mode="In" />
+  </Function>
+  <Function Name="generateHospital" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="count" Type="int" Mode="In" />
+  </Function>
+  <Function Name="secondTask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idHospital" Type="int" Mode="In" />
+  </Function>
+  <Function Name="updateHospital" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="hospitalNumber" Type="int" Mode="In" />
+    <Parameter Name="hospitalAdress" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="updateHospitalHasMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="hospitalNumber" Type="int" Mode="In" />
+    <Parameter Name="idMedicament" Type="int" Mode="In" />
+    <Parameter Name="countPackages" Type="int" Mode="In" />
+  </Function>
+  <Function Name="updateMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="firm" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="updatePharmacy" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pharmacyNumber" Type="int" Mode="In" />
+    <Parameter Name="pharmacyAdress" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="updatePharmacyHasMedicament" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="pharmacylNumber" Type="int" Mode="In" />
+    <Parameter Name="idMedicament" Type="int" Mode="In" />
+    <Parameter Name="pricePerPackages" Type="int" Mode="In" />
+    <Parameter Name="countPackages" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="Хранилище MedicineModelContainer">
+    <EntitySet Name="Hospital" EntityType="Self.Hospital" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hospital_has_Medicament" EntityType="Self.Hospital_has_Medicament" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medicament" EntityType="Self.Medicament" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pharmacy" EntityType="Self.Pharmacy" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pharmacy_has_Medicament" EntityType="Self.Pharmacy_has_Medicament" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Hospital___Hospi__2D27B809" Association="Self.FK__Hospital___Hospi__2D27B809">
+      <End Role="Hospital" EntitySet="Hospital" />
+      <End Role="Hospital_has_Medicament" EntitySet="Hospital_has_Medicament" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Hospital___Medic__2E1BDC42" Association="Self.FK__Hospital___Medic__2E1BDC42">
+      <End Role="Medicament" EntitySet="Medicament" />
+      <End Role="Hospital_has_Medicament" EntitySet="Hospital_has_Medicament" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Pharmacy___Medic__2A4B4B5E" Association="Self.FK__Pharmacy___Medic__2A4B4B5E">
+      <End Role="Medicament" EntitySet="Medicament" />
+      <End Role="Pharmacy_has_Medicament" EntitySet="Pharmacy_has_Medicament" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Pharmacy___Pharm__29572725" Association="Self.FK__Pharmacy___Pharm__29572725">
+      <End Role="Pharmacy" EntitySet="Pharmacy" />
+      <End Role="Pharmacy_has_Medicament" EntitySet="Pharmacy_has_Medicament" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

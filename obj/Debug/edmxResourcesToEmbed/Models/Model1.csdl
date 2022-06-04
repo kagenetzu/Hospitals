@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MedicineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Hospital">
+    <Key>
+      <PropertyRef Name="hospitalNumber" />
+    </Key>
+    <Property Name="hospitalNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hospitalAddress" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Hospital_has_Medicament" Relationship="Self.FK__Hospital___Hospi__2D27B809" FromRole="Hospital" ToRole="Hospital_has_Medicament" />
+  </EntityType>
+  <EntityType Name="Hospital_has_Medicament">
+    <Key>
+      <PropertyRef Name="Hospital_hospitalNumber" />
+      <PropertyRef Name="Medicament_idMedicament" />
+    </Key>
+    <Property Name="Hospital_hospitalNumber" Type="Int32" Nullable="false" />
+    <Property Name="Medicament_idMedicament" Type="Int32" Nullable="false" />
+    <Property Name="countPackagesMedicament" Type="Int32" />
+    <NavigationProperty Name="Hospital" Relationship="Self.FK__Hospital___Hospi__2D27B809" FromRole="Hospital_has_Medicament" ToRole="Hospital" />
+    <NavigationProperty Name="Medicament" Relationship="Self.FK__Hospital___Medic__2E1BDC42" FromRole="Hospital_has_Medicament" ToRole="Medicament" />
+  </EntityType>
+  <EntityType Name="Medicament">
+    <Key>
+      <PropertyRef Name="idMedicament" />
+    </Key>
+    <Property Name="idMedicament" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nameMedicament" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="firmManufacturer" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Hospital_has_Medicament" Relationship="Self.FK__Hospital___Medic__2E1BDC42" FromRole="Medicament" ToRole="Hospital_has_Medicament" />
+    <NavigationProperty Name="Pharmacy_has_Medicament" Relationship="Self.FK__Pharmacy___Medic__2A4B4B5E" FromRole="Medicament" ToRole="Pharmacy_has_Medicament" />
+  </EntityType>
+  <EntityType Name="Pharmacy">
+    <Key>
+      <PropertyRef Name="pharmacyNumber" />
+    </Key>
+    <Property Name="pharmacyNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="pharmacyAddress" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Pharmacy_has_Medicament" Relationship="Self.FK__Pharmacy___Pharm__29572725" FromRole="Pharmacy" ToRole="Pharmacy_has_Medicament" />
+  </EntityType>
+  <EntityType Name="Pharmacy_has_Medicament">
+    <Key>
+      <PropertyRef Name="Pharmacy_pharmacyNumber" />
+      <PropertyRef Name="Medicament_idMedicament" />
+    </Key>
+    <Property Name="Pharmacy_pharmacyNumber" Type="Int32" Nullable="false" />
+    <Property Name="Medicament_idMedicament" Type="Int32" Nullable="false" />
+    <Property Name="priceMedicamentPerPackeges" Type="Int32" />
+    <Property Name="countPackegesMedicament" Type="Int32" />
+    <NavigationProperty Name="Medicament" Relationship="Self.FK__Pharmacy___Medic__2A4B4B5E" FromRole="Pharmacy_has_Medicament" ToRole="Medicament" />
+    <NavigationProperty Name="Pharmacy" Relationship="Self.FK__Pharmacy___Pharm__29572725" FromRole="Pharmacy_has_Medicament" ToRole="Pharmacy" />
+  </EntityType>
+  <Association Name="FK__Hospital___Hospi__2D27B809">
+    <End Role="Hospital" Type="Self.Hospital" Multiplicity="1" />
+    <End Role="Hospital_has_Medicament" Type="Self.Hospital_has_Medicament" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hospital">
+        <PropertyRef Name="hospitalNumber" />
+      </Principal>
+      <Dependent Role="Hospital_has_Medicament">
+        <PropertyRef Name="Hospital_hospitalNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Hospital___Medic__2E1BDC42">
+    <End Role="Medicament" Type="Self.Medicament" Multiplicity="1" />
+    <End Role="Hospital_has_Medicament" Type="Self.Hospital_has_Medicament" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicament">
+        <PropertyRef Name="idMedicament" />
+      </Principal>
+      <Dependent Role="Hospital_has_Medicament">
+        <PropertyRef Name="Medicament_idMedicament" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Pharmacy___Medic__2A4B4B5E">
+    <End Role="Medicament" Type="Self.Medicament" Multiplicity="1" />
+    <End Role="Pharmacy_has_Medicament" Type="Self.Pharmacy_has_Medicament" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicament">
+        <PropertyRef Name="idMedicament" />
+      </Principal>
+      <Dependent Role="Pharmacy_has_Medicament">
+        <PropertyRef Name="Medicament_idMedicament" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Pharmacy___Pharm__29572725">
+    <End Role="Pharmacy" Type="Self.Pharmacy" Multiplicity="1" />
+    <End Role="Pharmacy_has_Medicament" Type="Self.Pharmacy_has_Medicament" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pharmacy">
+        <PropertyRef Name="pharmacyNumber" />
+      </Principal>
+      <Dependent Role="Pharmacy_has_Medicament">
+        <PropertyRef Name="Pharmacy_pharmacyNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MedicineEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Hospital" EntityType="Self.Hospital" />
+    <EntitySet Name="Hospital_has_Medicament" EntityType="Self.Hospital_has_Medicament" />
+    <EntitySet Name="Medicament" EntityType="Self.Medicament" />
+    <EntitySet Name="Pharmacy" EntityType="Self.Pharmacy" />
+    <EntitySet Name="Pharmacy_has_Medicament" EntityType="Self.Pharmacy_has_Medicament" />
+    <AssociationSet Name="FK__Hospital___Hospi__2D27B809" Association="Self.FK__Hospital___Hospi__2D27B809">
+      <End Role="Hospital" EntitySet="Hospital" />
+      <End Role="Hospital_has_Medicament" EntitySet="Hospital_has_Medicament" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Hospital___Medic__2E1BDC42" Association="Self.FK__Hospital___Medic__2E1BDC42">
+      <End Role="Medicament" EntitySet="Medicament" />
+      <End Role="Hospital_has_Medicament" EntitySet="Hospital_has_Medicament" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Pharmacy___Medic__2A4B4B5E" Association="Self.FK__Pharmacy___Medic__2A4B4B5E">
+      <End Role="Medicament" EntitySet="Medicament" />
+      <End Role="Pharmacy_has_Medicament" EntitySet="Pharmacy_has_Medicament" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Pharmacy___Pharm__29572725" Association="Self.FK__Pharmacy___Pharm__29572725">
+      <End Role="Pharmacy" EntitySet="Pharmacy" />
+      <End Role="Pharmacy_has_Medicament" EntitySet="Pharmacy_has_Medicament" />
+    </AssociationSet>
+    <FunctionImport Name="firstTask" ReturnType="Collection(MedicineModel.firstTask_Result)">
+      <Parameter Name="idPharmacy" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="secondTask" ReturnType="Collection(MedicineModel.secondTask_Result)">
+      <Parameter Name="idHospital" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="addHospital">
+      <Parameter Name="hospitalAdress" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="addHospitalHasMedicament">
+      <Parameter Name="hospitalNumber" Mode="In" Type="Int32" />
+      <Parameter Name="idMedicament" Mode="In" Type="Int32" />
+      <Parameter Name="countPackagesMedicament" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="addMedicament">
+      <Parameter Name="nameMedicament" Mode="In" Type="String" />
+      <Parameter Name="firmManucacturer" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="addPharmacy">
+      <Parameter Name="pharmacylAdress" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="addPharmacyHasMedicament">
+      <Parameter Name="pharmacyNumber" Mode="In" Type="Int32" />
+      <Parameter Name="idMedicament" Mode="In" Type="Int32" />
+      <Parameter Name="priceMedicamentPerPackages" Mode="In" Type="Int32" />
+      <Parameter Name="countPackagesMedicament" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="deleteHospital">
+      <Parameter Name="hospitalNumber" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="deleteHospitalHasMedicament">
+      <Parameter Name="hospitalNumber" Mode="In" Type="Int32" />
+      <Parameter Name="idMedicament" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="deleteMedicament">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="deletePharmacy">
+      <Parameter Name="pharmacyNumber" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="deletePharmacyHasMedicament">
+      <Parameter Name="pharmacylNumber" Mode="In" Type="Int32" />
+      <Parameter Name="idMedicament" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="generateHospital">
+      <Parameter Name="count" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="updateHospital">
+      <Parameter Name="hospitalNumber" Mode="In" Type="Int32" />
+      <Parameter Name="hospitalAdress" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="updateHospitalHasMedicament">
+      <Parameter Name="hospitalNumber" Mode="In" Type="Int32" />
+      <Parameter Name="idMedicament" Mode="In" Type="Int32" />
+      <Parameter Name="countPackages" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="updateMedicament">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="name" Mode="In" Type="String" />
+      <Parameter Name="firm" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="updatePharmacy">
+      <Parameter Name="pharmacyNumber" Mode="In" Type="Int32" />
+      <Parameter Name="pharmacyAdress" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="updatePharmacyHasMedicament">
+      <Parameter Name="pharmacylNumber" Mode="In" Type="Int32" />
+      <Parameter Name="idMedicament" Mode="In" Type="Int32" />
+      <Parameter Name="pricePerPackages" Mode="In" Type="Int32" />
+      <Parameter Name="countPackages" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="firstTask_Result">
+    <Property Type="Int32" Name="Medicament_idMedicament" Nullable="false" />
+    <Property Type="String" Name="nameMedicament" Nullable="true" MaxLength="15" />
+  </ComplexType>
+  <ComplexType Name="secondTask_Result">
+    <Property Type="Int32" Name="Pharmacy_pharmacyNumber" Nullable="false" />
+    <Property Type="Int32" Name="Medicament_idMedicament" Nullable="false" />
+    <Property Type="String" Name="nameMedicament" Nullable="true" MaxLength="15" />
+    <Property Type="Int32" Name="priceMedicamentPerPackeges" Nullable="true" />
+  </ComplexType>
+</Schema>

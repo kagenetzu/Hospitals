@@ -1,0 +1,43 @@
+﻿@model KURSLAB3.Models.Hospital_has_Medicament
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <h4>Лекарства в больнице</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+           Количество упаковок
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.countPackagesMedicament)
+        </dd>
+
+        <dt>
+            Адрес больницы
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hospital.hospitalAddress)
+        </dd>
+
+        <dt>
+            Название лекарства
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Medicament.nameMedicament)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Изменить", "Edit", new { id1 = Model.Hospital_hospitalNumber, id2 = Model.Medicament_idMedicament }) |
+    @Html.ActionLink("Вернуться", "Index")
+</p>

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище MedicineModelContainer" CdmEntityContainer="MedicineEntities">
+    <EntitySetMapping Name="Hospital">
+      <EntityTypeMapping TypeName="MedicineModel.Hospital">
+        <MappingFragment StoreEntitySet="Hospital">
+          <ScalarProperty Name="hospitalNumber" ColumnName="hospitalNumber" />
+          <ScalarProperty Name="hospitalAddress" ColumnName="hospitalAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hospital_has_Medicament">
+      <EntityTypeMapping TypeName="MedicineModel.Hospital_has_Medicament">
+        <MappingFragment StoreEntitySet="Hospital_has_Medicament">
+          <ScalarProperty Name="Hospital_hospitalNumber" ColumnName="Hospital_hospitalNumber" />
+          <ScalarProperty Name="Medicament_idMedicament" ColumnName="Medicament_idMedicament" />
+          <ScalarProperty Name="countPackagesMedicament" ColumnName="countPackagesMedicament" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medicament">
+      <EntityTypeMapping TypeName="MedicineModel.Medicament">
+        <MappingFragment StoreEntitySet="Medicament">
+          <ScalarProperty Name="idMedicament" ColumnName="idMedicament" />
+          <ScalarProperty Name="nameMedicament" ColumnName="nameMedicament" />
+          <ScalarProperty Name="firmManufacturer" ColumnName="firmManufacturer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pharmacy">
+      <EntityTypeMapping TypeName="MedicineModel.Pharmacy">
+        <MappingFragment StoreEntitySet="Pharmacy">
+          <ScalarProperty Name="pharmacyNumber" ColumnName="pharmacyNumber" />
+          <ScalarProperty Name="pharmacyAddress" ColumnName="pharmacyAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pharmacy_has_Medicament">
+      <EntityTypeMapping TypeName="MedicineModel.Pharmacy_has_Medicament">
+        <MappingFragment StoreEntitySet="Pharmacy_has_Medicament">
+          <ScalarProperty Name="Pharmacy_pharmacyNumber" ColumnName="Pharmacy_pharmacyNumber" />
+          <ScalarProperty Name="Medicament_idMedicament" ColumnName="Medicament_idMedicament" />
+          <ScalarProperty Name="priceMedicamentPerPackeges" ColumnName="priceMedicamentPerPackeges" />
+          <ScalarProperty Name="countPackegesMedicament" ColumnName="countPackegesMedicament" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="firstTask" FunctionName="Хранилище MedicineModel.firstTask">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MedicineModel.firstTask_Result">
+          <ScalarProperty Name="Medicament_idMedicament" ColumnName="Medicament_idMedicament" />
+          <ScalarProperty Name="nameMedicament" ColumnName="nameMedicament" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="secondTask" FunctionName="Хранилище MedicineModel.secondTask">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MedicineModel.secondTask_Result">
+          <ScalarProperty Name="Pharmacy_pharmacyNumber" ColumnName="Pharmacy_pharmacyNumber" />
+          <ScalarProperty Name="Medicament_idMedicament" ColumnName="Medicament_idMedicament" />
+          <ScalarProperty Name="nameMedicament" ColumnName="nameMedicament" />
+          <ScalarProperty Name="priceMedicamentPerPackeges" ColumnName="priceMedicamentPerPackeges" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="addHospital" FunctionName="Хранилище MedicineModel.addHospital" />
+    <FunctionImportMapping FunctionImportName="addHospitalHasMedicament" FunctionName="Хранилище MedicineModel.addHospitalHasMedicament" />
+    <FunctionImportMapping FunctionImportName="addMedicament" FunctionName="Хранилище MedicineModel.addMedicament" />
+    <FunctionImportMapping FunctionImportName="addPharmacy" FunctionName="Хранилище MedicineModel.addPharmacy" />
+    <FunctionImportMapping FunctionImportName="addPharmacyHasMedicament" FunctionName="Хранилище MedicineModel.addPharmacyHasMedicament" />
+    <FunctionImportMapping FunctionImportName="deleteHospital" FunctionName="Хранилище MedicineModel.deleteHospital" />
+    <FunctionImportMapping FunctionImportName="deleteHospitalHasMedicament" FunctionName="Хранилище MedicineModel.deleteHospitalHasMedicament" />
+    <FunctionImportMapping FunctionImportName="deleteMedicament" FunctionName="Хранилище MedicineModel.deleteMedicament" />
+    <FunctionImportMapping FunctionImportName="deletePharmacy" FunctionName="Хранилище MedicineModel.deletePharmacy" />
+    <FunctionImportMapping FunctionImportName="deletePharmacyHasMedicament" FunctionName="Хранилище MedicineModel.deletePharmacyHasMedicament" />
+    <FunctionImportMapping FunctionImportName="generateHospital" FunctionName="Хранилище MedicineModel.generateHospital" />
+    <FunctionImportMapping FunctionImportName="updateHospital" FunctionName="Хранилище MedicineModel.updateHospital" />
+    <FunctionImportMapping FunctionImportName="updateHospitalHasMedicament" FunctionName="Хранилище MedicineModel.updateHospitalHasMedicament" />
+    <FunctionImportMapping FunctionImportName="updateMedicament" FunctionName="Хранилище MedicineModel.updateMedicament" />
+    <FunctionImportMapping FunctionImportName="updatePharmacy" FunctionName="Хранилище MedicineModel.updatePharmacy" />
+    <FunctionImportMapping FunctionImportName="updatePharmacyHasMedicament" FunctionName="Хранилище MedicineModel.updatePharmacyHasMedicament" />
+  </EntityContainerMapping>
+</Mapping>

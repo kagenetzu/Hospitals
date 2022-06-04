@@ -1,0 +1,37 @@
+﻿@model KURSLAB3.Models.Hospital
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены что хотите удалить данную запись?</h3>
+<div>
+    <h4>Больница</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @*@Html.DisplayNameFor(model => model.hospitalAddress)*@
+            Адрес больницы
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hospitalAddress)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться", "Index")
+        </div>
+        }
+    </div>
